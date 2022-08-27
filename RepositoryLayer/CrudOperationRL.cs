@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
-using abc.CommonLayer.Model; 
+using abc.CommonLayer.Model;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 
 namespace abc.RepositoryLayer
@@ -12,10 +13,13 @@ namespace abc.RepositoryLayer
     {
         public readonly IConfiguration _configuration;
         public readonly SqlConnection _sqlConnection;
+        
         public CrudOperationRL(IConfiguration configuration)
         {
             _configuration = configuration;
             _sqlConnection = new SqlConnection(_configuration[key: "ConnectionStrings:DBSettingConnection"]);
+         
+
         }
 
         public async Task<CreateRecordResponse> CreateRecord(CreateRecordRequest request)
@@ -25,17 +29,18 @@ namespace abc.RepositoryLayer
             response.Message = "succesful";
             try
             {
-                string SqlQuery = "Insert  Into data( Id ,UserName , Age , Password ,Confirm_Password ) values (@Id , @UserName , @Age , @Password , @Confirm_Password)";
+                string SqlQuery = "Insert  Into data( UserName , Age , Password ,Confirm_Password, email ) values ( @UserName , @Age , @Password , @Confirm_Password , @email)";
                 using (SqlCommand sqlCommand = new SqlCommand(SqlQuery, _sqlConnection))
                 {
                     sqlCommand.CommandType = System.Data.CommandType.Text;
-                    sqlCommand.CommandTimeout = 180;
-                
+                    
+               
                     sqlCommand.Parameters.AddWithValue("@userName", request.UserName);
                     sqlCommand.Parameters.AddWithValue("@Age", request.Age);
                     sqlCommand.Parameters.AddWithValue("@password", request.Password);
                     sqlCommand.Parameters.AddWithValue("@Confirm_Password", request.Confirm_Password);
                     sqlCommand.Parameters.AddWithValue("@Photo", request.Photo);
+                    sqlCommand.Parameters.AddWithValue("@email", request.email);
 
                     _sqlConnection.Open();
                     int Status = await sqlCommand.ExecuteNonQueryAsync();
@@ -193,5 +198,11 @@ namespace abc.RepositoryLayer
             }
             return response;
         }
+        public async Task <string> LoginAsync(login login)
+        {
+
+        }
+
+       
     }
 }

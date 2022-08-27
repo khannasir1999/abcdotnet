@@ -2,10 +2,10 @@
   "ExpandedNodes": [
     "",
     "\\CommonLayer",
-    "\\CommonLayer\\Model",
+    "\\Controller",
     "\\RepositoryLayer",
     "\\ServiceLayer"
   ],
-  "SelectedNode": "\\ServiceLayer\\ICrudOperationSL.cs",
+  "SelectedNode": "\\Controller\\CrudOperationController.cs",
   "PreviewInSolutionExplorer": false
 }
