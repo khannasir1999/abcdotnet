@@ -198,10 +198,7 @@ namespace abc.RepositoryLayer
             }
             return response;
         }
-        public async Task <string> LoginAsync(login login)
-        {
-
-        }
+      
 
        
     }

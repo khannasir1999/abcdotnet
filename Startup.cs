@@ -31,6 +31,7 @@ namespace abc
             services.AddControllers();
             services.AddScoped<ICrudOperationSL, CrudOperationSL>();
             services.AddScoped<ICrudOperationRL, CrudOperationRL>();
+            services.AddTransient<IAccountRL, AccountRL>();
             services.AddSwaggerGen();
 
         }
