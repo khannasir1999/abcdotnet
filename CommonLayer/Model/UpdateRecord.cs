@@ -6,7 +6,8 @@
         public string Username { set; get; }
 
         public int Age { set; get; }
-
+         public string Password { set; get; }
+        public string Confirm_Password { set; get; }
 
 
     }

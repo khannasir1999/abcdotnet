@@ -25,13 +25,18 @@ namespace abc.RepositoryLayer
             response.Message = "succesful";
             try
             {
-                string SqlQuery = "Insert  Into CrudOperationTable(UserName , Age) values (@UserName , @Age)";
+                string SqlQuery = "Insert  Into data( Id ,UserName , Age , Password ,Confirm_Password ) values (@Id , @UserName , @Age , @Password , @Confirm_Password)";
                 using (SqlCommand sqlCommand = new SqlCommand(SqlQuery, _sqlConnection))
                 {
                     sqlCommand.CommandType = System.Data.CommandType.Text;
                     sqlCommand.CommandTimeout = 180;
-                    sqlCommand.Parameters.AddWithValue("@UserName", request.UserName);
+                
+                    sqlCommand.Parameters.AddWithValue("@userName", request.UserName);
                     sqlCommand.Parameters.AddWithValue("@Age", request.Age);
+                    sqlCommand.Parameters.AddWithValue("@password", request.Password);
+                    sqlCommand.Parameters.AddWithValue("@Confirm_Password", request.Confirm_Password);
+                    sqlCommand.Parameters.AddWithValue("@Photo", request.Photo);
+
                     _sqlConnection.Open();
                     int Status = await sqlCommand.ExecuteNonQueryAsync();
                     if (Status <= 0)
@@ -61,7 +66,7 @@ namespace abc.RepositoryLayer
             response.Message = "Response Successfully established";
             try
             {
-                string SqlQuery = "Delete from CrudOperationTable where id=@id";
+                string SqlQuery = "Delete from data where id=@id";
                 using (SqlCommand sqlCommand = new SqlCommand(SqlQuery, _sqlConnection))
                 {
                     sqlCommand.CommandType = System.Data.CommandType.Text;
@@ -72,7 +77,7 @@ namespace abc.RepositoryLayer
                     if (status <= 0)
                     {
                         response.IsSuccess = false;
-                        response.Message = "Unsuccessful";
+                        response.Message = "Unsuccessfulll";
                     }
                 }
 
@@ -98,7 +103,7 @@ namespace abc.RepositoryLayer
             response.Message = "succesful";
             try
             {
-                string sqlQuery = "Select Username , Age from CrudOperationTable;";
+                string sqlQuery = "Select Username , Age  from data;";
                 using (SqlCommand sqlCommand = new SqlCommand(sqlQuery, _sqlConnection))
                 {
                     sqlCommand.CommandType = System.Data.CommandType.Text;
@@ -116,6 +121,7 @@ namespace abc.RepositoryLayer
                                 ReadRecordData dbData = new ReadRecordData();
                                 dbData.UserName = sqlDataReader[name: "UserName"] != DBNull.Value ? sqlDataReader[name: "UserName"].ToString() : null;
                                 dbData.Age = sqlDataReader[name: "Age"] != DBNull.Value ? Convert.ToInt32(sqlDataReader[name: "Age"]) : 0;
+                               
                                 response.readRecordData.Add(dbData);
 
                             }
@@ -126,7 +132,7 @@ namespace abc.RepositoryLayer
                     if (status <= 0)
                     {
                         response.IsSuccess = false;
-                        response.Message = "unsuccesful";
+                        response.Message = "unsuccesfullllllllllllllllllllllllllllllll";
                     }
 
 
@@ -153,7 +159,7 @@ namespace abc.RepositoryLayer
 
             try
             {
-                string SqlQuery = "Update CrudOperationTable Set UserName =@UserName , Age = @Age where Id = @Id";
+                string SqlQuery = "Update data Set UserName =@UserName , Age = @Age , Password = @Password , Confirm_Password = @Confirm_Password where Id = @Id";
                 using (SqlCommand sqlCommand = new SqlCommand(SqlQuery, _sqlConnection))
                 {
                     sqlCommand.CommandType = System.Data.CommandType.Text;
@@ -161,6 +167,9 @@ namespace abc.RepositoryLayer
                     sqlCommand.Parameters.AddWithValue("@UserName", request.Username);
                     sqlCommand.Parameters.AddWithValue("@Age", request.Age);
                     sqlCommand.Parameters.AddWithValue("@Id", request.id);
+                    sqlCommand.Parameters.AddWithValue("@Password", request.Password);
+                    sqlCommand.Parameters.AddWithValue("@Confirm_Password", request.Confirm_Password);
+                    
                     _sqlConnection.Open();
                     int Status = await sqlCommand.ExecuteNonQueryAsync();
                     if (Status <= 0)

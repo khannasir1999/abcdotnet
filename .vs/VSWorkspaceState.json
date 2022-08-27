@@ -1,0 +1,11 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\CommonLayer",
+    "\\CommonLayer\\Model",
+    "\\RepositoryLayer",
+    "\\ServiceLayer"
+  ],
+  "SelectedNode": "\\ServiceLayer\\ICrudOperationSL.cs",
+  "PreviewInSolutionExplorer": false
+}
